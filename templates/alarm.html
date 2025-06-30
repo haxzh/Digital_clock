@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customizable Alarm Clock</title>
+<style>
+     body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+     }
+     #clock {
+        font-size: 2em;
+        margin: 20px 0;
+     }
+     input, button, select {
+          font-size: 1.2em;
+          padding: 10px;
+          margin: 5px;
+     }
+    </style>
+</head>
+<body>
+
+    <h1>Alarm Clock with Custom Sound</h1>
+    <div id="clock">00:00:00</div>
+
+    <label for="alarmTime">Set Alarm Time:</label>
+    <input type="time" id="alarmTime" step="1">  
+    <br>
+
+    <label for="alarmSoundSelect">Choose Alarm Sound:</label>
+    <select id="alarmSoundSelect">
+        <option value="beep-09.wav">Beep</option>
+        <option value="bell.mp3">Bell</option>
+        <option value="alarm.mp3">Classic Alarm</option>
+    </select>
+    <br>
+
+    <button onclick="setAlarm()">Set Alarm</button>
+    <button onclick="clearAlarm()">Clear Alarm</button>
+
+    <audio id="alarmSound"></audio>
+
+    <script>
+        let alarmTime = null;
+        let alarmSound = document.getElementById("alarmSound");
+
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById("clock").textContent = timeString;
+
+            if (alarmTime === timeString) {
+                alarmSound.play();
+                alert("⏰ Alarm Ringing!");
+            }
+        }
+
+        function setAlarm() {
+            const input = document.getElementById("alarmTime").value;
+            const soundSelect = document.getElementById("alarmSoundSelect").value;
+
+            if (!input) {
+                alert("❌ Please select a valid time!");
+                return;
+            }
+
+            alarmTime = input + ":00";  
+            alarmSound.src = "https://www.soundjay.com/button/" + soundSelect;  
+
+            alert(`✅ Alarm set for ${alarmTime} with sound: ${soundSelect}`);
+        }
+
+        function clearAlarm() {
+            alarmTime = null;
+            alarmSound.pause();
+            alarmSound.currentTime = 0;
+            alert("🚫 Alarm cleared!");
+        }
+
+        setInterval(updateClock, 1000); 
+    </script>
+
+</body>
+</html>

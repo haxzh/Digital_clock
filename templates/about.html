@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Digital Clock</title>
+    <style>
+        /* {% load static %} */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("{% static 'images/s.jpg' %}") no-repeat center center/cover; /* Background image */
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .clock-container {
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: white;
+        }
+        .clock {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .box {
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent box */
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .ampm {
+            background: rgba(0, 128, 0, 0.8); /* Green background for AM/PM */
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        .button-group button {
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: #61dafb;
+            color: #282c36;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button-group button:hover {
+            background-color: #21a1f1;
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <h2>Digital Clock</h2>
+        <div class="clock">
+            <div class="box" id="hours">00</div>
+            <div class="box" id="minutes">00</div>
+            <div class="box" id="seconds">00</div>
+            <div class="ampm" id="ampm">AM</div>
+        </div>
+    </div>
+    <div class="button-group">
+        <button onclick="window.location.href = '/';">Home</button> <style></style>
+    </div>
+    <script>
+        function updateClock() {
+            let now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12 || 12;
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+            document.getElementById('ampm').innerText = ampm;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
